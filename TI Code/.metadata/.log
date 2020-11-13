@@ -1,0 +1,971 @@
+!SESSION 2019-11-30 16:13:03.319 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product com.ti.ccstudio.branding.product
+
+This is a continuation of log file C:\Users\Daniel Foreman\Desktop\Coding\TI Code\.metadata\.bak_0.log
+Created Time: 2019-12-01 17:02:07.515
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-01 17:02:07.516
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-01 17:04:33.263
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-01 18:18:02.098
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-01 18:18:45.306
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-01 18:20:28.342
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-01 18:22:55.413
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-01 18:29:21.897
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+!SESSION 2019-12-02 21:06:45.788 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product com.ti.ccstudio.branding.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-12-02 21:06:57.952
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.ti.common.core 1 0 2019-12-02 21:07:07.533
+!MESSAGE path=ccs_base/DebugServer
+
+!ENTRY com.ti.common.core 1 0 2019-12-02 21:07:07.762
+!MESSAGE debugServerDir=C:/ti/ccs910/ccs/ccs_base/DebugServer
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-02 21:09:54.720
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-02 21:09:54.762
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-02 21:09:54.762
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.ti.ccstudio.ui 1 0 2019-12-02 21:10:00.720
+!MESSAGE CCS IDE session started!
+	CCS build: 9.1.0.00010
+	CCS location: C:/ti/ccs910/ccs
+	Workspace location: C:/Users/Daniel Foreman/Desktop/Coding/TI Code
+
+!ENTRY com.ti.ccstudio.debug.server 4 214294189 2019-12-02 21:10:03.226
+!MESSAGE Unexpected CCS exit detected [11/30/19 4:13 PM]!!!
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:10.458
+!MESSAGE constructor
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:10.460
+!MESSAGE done with directories
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:10.461
+!MESSAGE loading ti_logger
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:10.463
+!MESSAGE Platform os: win32
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:10.464
+!MESSAGE loading cToolsIF
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:12.616
+!MESSAGE loading cTools
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:12.991
+!MESSAGE loading TraceFactory
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:13.122
+!MESSAGE loading sqlite3
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:13.361
+!MESSAGE loading CloudTrace
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-02 21:10:14.152
+!MESSAGE CloudTrace interface loaded
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-12-02 21:10:57.917
+!MESSAGE No repository found at file:/C:/Users/Daniel%20Foreman/Desktop/CCS9.1.0.00010_win64/CCS9.1.0.00010_win64/baserepo/p2appfRepo/.
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-02 21:11:54.884
+!MESSAGE DS_ERROR: CS_DAP_0: Error connecting to the target: (Error -260 @ 0x0) An attempt to connect to the XDS110 failed. The cause may be one or more of: no XDS110 is connected, invalid firmware update, invalid XDS110 serial number, or faulty USB cable. The firmware and serial number may be updated using the xdsdfu utility found in the .../ccs_base/common/uscif/xds110 directory of your installation. View the ReadMe.txt file there for instructions. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-02 21:11:55.189
+!MESSAGE DS_ERROR: Error connecting to the target:
+(Error -260 @ 0x0)
+An attempt to connect to the XDS110 failed.
+The cause may be one or more of: no XDS110 is connected, invalid
+firmware update, invalid XDS110 serial number, or faulty USB
+cable. The firmware and serial number may be updated using the
+xdsdfu utility found in the .../ccs_base/common/uscif/xds110
+directory of your installation. View the ReadMe.txt file there
+for instructions.
+(Emulation package 8.2.0.00004)
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 00:02:45.153
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -261 @ 0x0) Invalid response was received from the XDS110. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 00:02:45.197
+!MESSAGE DS_ERROR: CORTEX_M4_0: Failed to remove the debug state from the target before disconnecting.  There may still be breakpoint op-codes embedded in program memory.  It is recommended that you reset the emulator before you connect and reload your program before you continue debugging
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 01:08:08.960
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -261 @ 0x0) Invalid response was received from the XDS110. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 01:08:09.025
+!MESSAGE DS_ERROR: CORTEX_M4_0: Failed to remove the debug state from the target before disconnecting.  There may still be breakpoint op-codes embedded in program memory.  It is recommended that you reset the emulator before you connect and reload your program before you continue debugging
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 01:39:11.861
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -261 @ 0x0) Invalid response was received from the XDS110. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 01:39:11.879
+!MESSAGE DS_ERROR: CORTEX_M4_0: Failed to remove the debug state from the target before disconnecting.  There may still be breakpoint op-codes embedded in program memory.  It is recommended that you reset the emulator before you connect and reload your program before you continue debugging
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 01:44:21.318
+!MESSAGE DS_ERROR: CS_DAP_0: Error connecting to the target: (Error -260 @ 0x0) An attempt to connect to the XDS110 failed. The cause may be one or more of: no XDS110 is connected, invalid firmware update, invalid XDS110 serial number, or faulty USB cable. The firmware and serial number may be updated using the xdsdfu utility found in the .../ccs_base/common/uscif/xds110 directory of your installation. View the ReadMe.txt file there for instructions. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 01:44:21.463
+!MESSAGE DS_ERROR: Error connecting to the target:
+(Error -260 @ 0x0)
+An attempt to connect to the XDS110 failed.
+The cause may be one or more of: no XDS110 is connected, invalid
+firmware update, invalid XDS110 serial number, or faulty USB
+cable. The firmware and serial number may be updated using the
+xdsdfu utility found in the .../ccs_base/common/uscif/xds110
+directory of your installation. View the ReadMe.txt file there
+for instructions.
+(Emulation package 8.2.0.00004)
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 01:59:22.740
+!MESSAGE DS_ERROR: CORTEX_M4_0: Can't Run Target CPU: (Error -2134 @ 0x0) Unable to control device execution state. Reset the device, and retry the operation. If error persists, confirm configuration, power-cycle the board, and/or try more reliable JTAG settings (e.g. lower TCLK). (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 01:59:22.774
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -261 @ 0x0) Invalid response was received from the XDS110. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 02:07:13.745
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -614 @ 0x0) The target indicates there is an error condition from a previous SWD  request. Clear the error the condition, and try the SWD request again. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 02:07:13.765
+!MESSAGE DS_ERROR: CORTEX_M4_0: Failed to remove the debug state from the target before disconnecting.  There may still be breakpoint op-codes embedded in program memory.  It is recommended that you reset the emulator before you connect and reload your program before you continue debugging
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 04:09:16.542
+!MESSAGE DS_ERROR: CS_DAP_0: Error connecting to the target: (Error -260 @ 0x0) An attempt to connect to the XDS110 failed. The cause may be one or more of: no XDS110 is connected, invalid firmware update, invalid XDS110 serial number, or faulty USB cable. The firmware and serial number may be updated using the xdsdfu utility found in the .../ccs_base/common/uscif/xds110 directory of your installation. View the ReadMe.txt file there for instructions. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 04:09:16.792
+!MESSAGE DS_ERROR: Error connecting to the target:
+(Error -260 @ 0x0)
+An attempt to connect to the XDS110 failed.
+The cause may be one or more of: no XDS110 is connected, invalid
+firmware update, invalid XDS110 serial number, or faulty USB
+cable. The firmware and serial number may be updated using the
+xdsdfu utility found in the .../ccs_base/common/uscif/xds110
+directory of your installation. View the ReadMe.txt file there
+for instructions.
+(Emulation package 8.2.0.00004)
+
+
+!ENTRY org.eclipse.cdt.core 1 0 2019-12-03 04:21:18.297
+!MESSAGE Indexed 'Forward' (3 sources, 10 headers) in 0.312 sec: 1,142 declarations; 2,461 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 04:29:44.878
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -261 @ 0x0) Invalid response was received from the XDS110. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-03 04:29:44.910
+!MESSAGE DS_ERROR: CORTEX_M4_0: Failed to remove the debug state from the target before disconnecting.  There may still be breakpoint op-codes embedded in program memory.  It is recommended that you reset the emulator before you connect and reload your program before you continue debugging
+
+!SESSION 2019-12-03 09:37:04.572 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product com.ti.ccstudio.branding.product
+
+!ENTRY com.ti.common.core 1 0 2019-12-03 09:37:28.192
+!MESSAGE path=ccs_base/DebugServer
+
+!ENTRY com.ti.common.core 1 0 2019-12-03 09:37:28.564
+!MESSAGE debugServerDir=C:/ti/ccs910/ccs/ccs_base/DebugServer
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-03 09:40:02.695
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-03 09:40:02.715
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-03 09:40:02.718
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.ti.ccstudio.ui 1 0 2019-12-03 09:40:07.783
+!MESSAGE CCS IDE session started!
+	CCS build: 9.1.0.00010
+	CCS location: C:/ti/ccs910/ccs
+	Workspace location: C:/Users/Daniel Foreman/Desktop/Coding/TI Code
+
+!ENTRY com.ti.ccstudio.debug.server 4 214294189 2019-12-03 09:40:10.492
+!MESSAGE Unexpected CCS exit detected [11/30/19 4:13 PM]!!!
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:14.076
+!MESSAGE constructor
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:14.079
+!MESSAGE done with directories
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:14.136
+!MESSAGE loading ti_logger
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:14.143
+!MESSAGE Platform os: win32
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:14.146
+!MESSAGE loading cToolsIF
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:14.636
+!MESSAGE loading cTools
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:15.134
+!MESSAGE loading TraceFactory
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:15.398
+!MESSAGE loading sqlite3
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:15.484
+!MESSAGE loading CloudTrace
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-03 09:40:17.263
+!MESSAGE CloudTrace interface loaded
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-12-03 09:40:48.194
+!MESSAGE No repository found at file:/C:/Users/Daniel%20Foreman/Desktop/CCS9.1.0.00010_win64/CCS9.1.0.00010_win64/baserepo/p2appfRepo/.
+!SESSION 2019-12-05 11:19:06.006 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product com.ti.ccstudio.branding.product
+
+!ENTRY com.ti.common.core 1 0 2019-12-05 11:19:11.925
+!MESSAGE path=ccs_base/DebugServer
+
+!ENTRY com.ti.common.core 1 0 2019-12-05 11:19:11.969
+!MESSAGE debugServerDir=C:/ti/ccs910/ccs/ccs_base/DebugServer
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-05 11:20:19.811
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-05 11:20:20.146
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-05 11:20:20.149
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.ti.ccstudio.ui 1 0 2019-12-05 11:20:23.686
+!MESSAGE CCS IDE session started!
+	CCS build: 9.1.0.00010
+	CCS location: C:/ti/ccs910/ccs
+	Workspace location: C:/Users/Daniel Foreman/Desktop/Coding/TI Code
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:28.037
+!MESSAGE constructor
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:28.038
+!MESSAGE done with directories
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:28.039
+!MESSAGE loading ti_logger
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:28.041
+!MESSAGE Platform os: win32
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:28.043
+!MESSAGE loading cToolsIF
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:28.127
+!MESSAGE loading cTools
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:29.504
+!MESSAGE loading TraceFactory
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:29.692
+!MESSAGE loading sqlite3
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:30.176
+!MESSAGE loading CloudTrace
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-05 11:20:30.311
+!MESSAGE CloudTrace interface loaded
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-12-05 11:20:57.640
+!MESSAGE No repository found at file:/C:/Users/Daniel%20Foreman/Desktop/CCS9.1.0.00010_win64/CCS9.1.0.00010_win64/baserepo/p2appfRepo/.
+
+!ENTRY org.eclipse.cdt.core 1 0 2019-12-05 11:23:26.459
+!MESSAGE Indexed 'Lab 10' (3 sources, 10 headers) in 1.18 sec: 1,142 declarations; 2,461 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+!SESSION 2019-12-09 00:29:50.100 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product com.ti.ccstudio.branding.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-12-09 00:30:01.353
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.ti.common.core 1 0 2019-12-09 00:30:03.601
+!MESSAGE path=ccs_base/DebugServer
+
+!ENTRY com.ti.common.core 1 0 2019-12-09 00:30:03.635
+!MESSAGE debugServerDir=C:/ti/ccs910/ccs/ccs_base/DebugServer
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-09 00:30:59.561
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-09 00:30:59.832
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-09 00:30:59.833
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.ti.ccstudio.ui 1 0 2019-12-09 00:31:08.360
+!MESSAGE CCS IDE session started!
+	CCS build: 9.1.0.00010
+	CCS location: C:/ti/ccs910/ccs
+	Workspace location: C:/Users/Daniel Foreman/Desktop/Coding/TI Code
+
+!ENTRY com.ti.ccstudio.debug.server 4 214294189 2019-12-09 00:31:11.360
+!MESSAGE Unexpected CCS exit detected [12/5/19 11:20 AM]!!!
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:15.595
+!MESSAGE constructor
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:15.597
+!MESSAGE done with directories
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:15.598
+!MESSAGE loading ti_logger
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:15.601
+!MESSAGE Platform os: win32
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:15.602
+!MESSAGE loading cToolsIF
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:18.377
+!MESSAGE loading cTools
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:18.636
+!MESSAGE loading TraceFactory
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:18.677
+!MESSAGE loading sqlite3
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:18.983
+!MESSAGE loading CloudTrace
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-09 00:31:21.897
+!MESSAGE CloudTrace interface loaded
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-12-09 00:32:32.912
+!MESSAGE No repository found at file:/C:/Users/Daniel%20Foreman/Desktop/CCS9.1.0.00010_win64/CCS9.1.0.00010_win64/baserepo/p2appfRepo/.
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-09 21:28:45.155
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.Socket$WebSocket.<init>(Socket.java:58)
+	at com.ti.cloudagent.communication.Socket.<init>(Socket.java:146)
+	at com.ti.cloudagent.communication.JSONInterface.<init>(JSONInterface.java:22)
+	at com.ti.cloudagent.Agent.<init>(Agent.java:114)
+	at com.ti.cloudagent.Agent.instance(Agent.java:43)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:294)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 21:38:09.151
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 21:46:30.063
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 21:51:48.263
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 22:01:21.532
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-09 22:02:30.639
+!MESSAGE DS_ERROR: CS_DAP_0: Error connecting to the target: (Error -260 @ 0x0) An attempt to connect to the XDS110 failed. The cause may be one or more of: no XDS110 is connected, invalid firmware update, invalid XDS110 serial number, or faulty USB cable. The firmware and serial number may be updated using the xdsdfu utility found in the .../ccs_base/common/uscif/xds110 directory of your installation. View the ReadMe.txt file there for instructions. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-09 22:02:30.896
+!MESSAGE DS_ERROR: Error connecting to the target:
+(Error -260 @ 0x0)
+An attempt to connect to the XDS110 failed.
+The cause may be one or more of: no XDS110 is connected, invalid
+firmware update, invalid XDS110 serial number, or faulty USB
+cable. The firmware and serial number may be updated using the
+xdsdfu utility found in the .../ccs_base/common/uscif/xds110
+directory of your installation. View the ReadMe.txt file there
+for instructions.
+(Emulation package 8.2.0.00004)
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-09 22:02:42.802
+!MESSAGE DS_ERROR: CS_DAP_0: Error connecting to the target: (Error -260 @ 0x0) An attempt to connect to the XDS110 failed. The cause may be one or more of: no XDS110 is connected, invalid firmware update, invalid XDS110 serial number, or faulty USB cable. The firmware and serial number may be updated using the xdsdfu utility found in the .../ccs_base/common/uscif/xds110 directory of your installation. View the ReadMe.txt file there for instructions. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-09 22:02:42.814
+!MESSAGE DS_ERROR: Error connecting to the target:
+(Error -260 @ 0x0)
+An attempt to connect to the XDS110 failed.
+The cause may be one or more of: no XDS110 is connected, invalid
+firmware update, invalid XDS110 serial number, or faulty USB
+cable. The firmware and serial number may be updated using the
+xdsdfu utility found in the .../ccs_base/common/uscif/xds110
+directory of your installation. View the ReadMe.txt file there
+for instructions.
+(Emulation package 8.2.0.00004)
+
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 22:06:57.309
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 22:19:09.509
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-09 22:24:35.466
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -261 @ 0x0) Invalid response was received from the XDS110. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-09 22:24:35.532
+!MESSAGE DS_ERROR: CORTEX_M4_0: Failed to remove the debug state from the target before disconnecting.  There may still be breakpoint op-codes embedded in program memory.  It is recommended that you reset the emulator before you connect and reload your program before you continue debugging
+
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 22:31:19.446
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 22:38:03.503
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-09 22:43:37.238
+!MESSAGE null parent found while collapsing trees
+!SESSION 2019-12-10 18:09:29.509 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product com.ti.ccstudio.branding.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-12-10 18:09:34.573
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.ti.common.core 1 0 2019-12-10 18:09:35.623
+!MESSAGE path=ccs_base/DebugServer
+
+!ENTRY com.ti.common.core 1 0 2019-12-10 18:09:35.624
+!MESSAGE debugServerDir=C:/ti/ccs910/ccs/ccs_base/DebugServer
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-10 18:10:21.331
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-10 18:10:21.399
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-10 18:10:21.401
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.ti.ccstudio.ui 1 0 2019-12-10 18:10:25.060
+!MESSAGE CCS IDE session started!
+	CCS build: 9.1.0.00010
+	CCS location: C:/ti/ccs910/ccs
+	Workspace location: C:/Users/Daniel Foreman/Desktop/Coding/TI Code
+
+!ENTRY com.ti.ccstudio.debug.server 4 214294189 2019-12-10 18:10:27.003
+!MESSAGE Unexpected CCS exit detected [12/5/19 11:20 AM]!!!
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:27.975
+!MESSAGE constructor
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:27.976
+!MESSAGE done with directories
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:27.977
+!MESSAGE loading ti_logger
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:27.978
+!MESSAGE Platform os: win32
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:27.979
+!MESSAGE loading cToolsIF
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:28.056
+!MESSAGE loading cTools
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:28.130
+!MESSAGE loading TraceFactory
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:28.166
+!MESSAGE loading sqlite3
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:28.204
+!MESSAGE loading CloudTrace
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-10 18:10:28.928
+!MESSAGE CloudTrace interface loaded
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-12-10 18:10:58.299
+!MESSAGE No repository found at file:/C:/Users/Daniel%20Foreman/Desktop/CCS9.1.0.00010_win64/CCS9.1.0.00010_win64/baserepo/p2appfRepo/.
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-10 20:47:49.255
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-10 21:10:58.293
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-10 21:18:28.430
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-10 21:29:33.711
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-10 21:33:19.495
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -261 @ 0x0) Invalid response was received from the XDS110. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-10 21:33:19.521
+!MESSAGE DS_ERROR: CORTEX_M4_0: Failed to remove the debug state from the target before disconnecting.  There may still be breakpoint op-codes embedded in program memory.  It is recommended that you reset the emulator before you connect and reload your program before you continue debugging
+
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-10 21:35:32.165
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-10 21:37:48.864
+!MESSAGE DS_ERROR: CORTEX_M4_0: Can't Run Target CPU: (Error -2134 @ 0x0) Unable to control device execution state. Reset the device, and retry the operation. If error persists, confirm configuration, power-cycle the board, and/or try more reliable JTAG settings (e.g. lower TCLK). (Emulation package 8.2.0.00004) 
+
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-10 21:37:48.899
+!MESSAGE DS_ERROR: CORTEX_M4_0: JTAG Communication Error: (Error -261 @ 0x0) Invalid response was received from the XDS110. (Emulation package 8.2.0.00004) 
+
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-10 21:59:52.260
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-13 17:39:07.878
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+
+!ENTRY com.ti.ccstudio.debug 1 0 2019-12-13 17:39:22.038
+!MESSAGE DS_ERROR: Warning:
+A firmware update is required for the debug probe. Click the "Update" button to update the firmware and connect to the debug target.
+DO NOT UNPLUG THE DEBUG PROBE DURING THE UPDATE.
+(Emulation package 8.2.0.00004)
+
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-13 17:43:32.510
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY com.ti.ccstudio.debug 4 0 2019-12-13 17:44:41.251
+!MESSAGE An internal error was logged by 'com.ti.ccstudio.debug'.
+!STACK 0
+java.util.concurrent.ExecutionException: org.json.JSONException: Module Closed
+	at java.util.concurrent.CompletableFuture.reportGet(Unknown Source)
+	at java.util.concurrent.CompletableFuture.get(Unknown Source)
+	at com.ti.ccstudio.debug.service.ApplicationService.getConnectedDebugProbes(ApplicationService.java:295)
+	at com.ti.ccstudio.debug.service.ApplicationService.detectXDS110ConnectedProbes(ApplicationService.java:356)
+	at com.ti.ccstudio.debug.service.ApplicationService.initDebugger(ApplicationService.java:418)
+	at com.ti.ccstudio.debug.service.ApplicationService.access$0(ApplicationService.java:408)
+	at com.ti.ccstudio.debug.service.ApplicationService$ThreadContextCache.retrieve(ApplicationService.java:136)
+	at com.ti.ccstudio.debug.dsf.extensions.concurrent.DataCache.wait(DataCache.java:59)
+	at com.ti.ccstudio.debug.service.ApplicationService.getCpuBeingDebugged(ApplicationService.java:1057)
+	at com.ti.ccstudio.debug.launch.CCSLaunchDelegate$2.execute(CCSLaunchDelegate.java:139)
+	at org.eclipse.cdt.dsf.concurrent.Query.run(Query.java:177)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.json.JSONException: Module Closed
+	at com.ti.cloudagent.communication.JSONInterface.call(JSONInterface.java:54)
+	at com.ti.cloudagent.Agent.createModule(Agent.java:171)
+	at com.ti.cloudagent.Agent.lambda$createSpecificModule$4(Agent.java:96)
+	at java.util.concurrent.CompletableFuture.uniHandle(Unknown Source)
+	at java.util.concurrent.CompletableFuture.uniHandleStage(Unknown Source)
+	at java.util.concurrent.CompletableFuture.handle(Unknown Source)
+	at com.ti.cloudagent.Agent.createSpecificModule(Agent.java:87)
+	at com.ti.cloudagent.Agent.createDeviceDetector(Agent.java:76)
+	... 16 more
+
+!ENTRY org.eclipse.core.resources 2 566 2019-12-13 17:49:30.017
+!MESSAGE null parent found while collapsing trees
+
+!ENTRY org.eclipse.ui.ide 4 4 2019-12-13 18:00:18.432
+!MESSAGE Problems saving workspace
+
+!ENTRY org.eclipse.ui.ide 4 1 2019-12-13 18:00:18.433
+!MESSAGE Problems occurred while trying to save the state of the workbench.
+!SUBENTRY 1 org.eclipse.core.resources 4 568 2019-12-13 18:00:18.433
+!MESSAGE Could not write workspace metadata 'C:/Users/Daniel Foreman/Desktop/Coding/TI Code/.metadata/.plugins/org.eclipse.core.resources/.root/37.tree'.
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.core.internal.watson.ElementTreeWriter.sortTrees(ElementTreeWriter.java:125)
+	at org.eclipse.core.internal.watson.ElementTreeWriter.writeDeltaChain(ElementTreeWriter.java:195)
+	at org.eclipse.core.internal.resources.SaveManager.writeTree(SaveManager.java:1974)
+	at org.eclipse.core.internal.resources.SaveManager.saveTree(SaveManager.java:1386)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1170)
+	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2332)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor$5.run(IDEWorkbenchAdvisor.java:526)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-12-13 18:00:43.915
+!MESSAGE The workspace will exit with unsaved changes in this session.
+
+!ENTRY org.eclipse.core.jobs 2 2 2019-12-13 18:00:46.662
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.debug.internal.ui.DebugUIPlugin$8
+!SESSION 2019-12-14 00:23:38.048 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product com.ti.ccstudio.branding.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product com.ti.ccstudio.branding.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-12-14 00:23:44.479
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.ti.common.core 1 0 2019-12-14 00:23:46.727
+!MESSAGE path=ccs_base/DebugServer
+
+!ENTRY com.ti.common.core 1 0 2019-12-14 00:23:46.773
+!MESSAGE debugServerDir=C:/ti/ccs910/ccs/ccs_base/DebugServer
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-14 00:24:48.990
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-14 00:24:49.050
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2019-12-14 00:24:49.051
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.ti.ccstudio.ui 1 0 2019-12-14 00:24:54.225
+!MESSAGE CCS IDE session started!
+	CCS build: 9.1.0.00010
+	CCS location: C:/ti/ccs910/ccs
+	Workspace location: C:/Users/Daniel Foreman/Desktop/Coding/TI Code
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:58.525
+!MESSAGE constructor
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:58.526
+!MESSAGE done with directories
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:58.528
+!MESSAGE loading ti_logger
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:58.532
+!MESSAGE Platform os: win32
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:58.533
+!MESSAGE loading cToolsIF
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:58.650
+!MESSAGE loading cTools
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:58.765
+!MESSAGE loading TraceFactory
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:58.844
+!MESSAGE loading sqlite3
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:59.075
+!MESSAGE loading CloudTrace
+
+!ENTRY com.ti.dbgtrc.webapp.CloudTraceInterface 0 0 2019-12-14 00:24:59.754
+!MESSAGE CloudTrace interface loaded
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-12-14 00:25:27.902
+!MESSAGE No repository found at file:/C:/Users/Daniel%20Foreman/Desktop/CCS9.1.0.00010_win64/CCS9.1.0.00010_win64/baserepo/p2appfRepo/.
+
+!ENTRY org.eclipse.cdt.core 1 0 2019-12-14 00:25:42.085
+!MESSAGE Indexed 'Algorithmic Car' (3 sources, 10 headers) in 1.3 sec: 1,142 declarations; 2,461 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)

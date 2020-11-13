@@ -1,0 +1,182 @@
+//import the driver library and the prototype and define statements
+#include "driverlib.h"
+#include <stdio.h>
+
+volatile uint8_t dutycycle=0;
+
+uint8_t adc =0;
+
+#define timer1_period 46875
+//1hz sampling rate for the potentiometer
+
+//also, couldn't you just put the potentiometer input to the H-bridge circuit and the effective voltage is exactly the same to the motor.  I guess it can go so low that it no longer turns.  I'm not sure.
+
+//3E+6/32 = 2*46875 Hz --> use 4687.5 as the up timer to count at 20 Hz -->4688 approximately
+const Timer_A_UpModeConfig upConfig_0 =                     // Up Mode
+        { TIMER_A_CLOCKSOURCE_SMCLK,                // Timer A is based on SMCLK
+          TIMER_A_CLOCKSOURCE_DIVIDER_64, // Slow down the counter 64 times over
+          timer1_period,                 // Period of Timer A, stored in TAxCCR0
+          TIMER_A_TAIE_INTERRUPT_DISABLE, // Disable interrupts when Timer A rolls over
+          TIMER_A_CCIE_CCR0_INTERRUPT_ENABLE, // Enable interrupt for capture-compare
+          TIMER_A_DO_CLEAR                   // Clears counter when initialized
+        };
+
+//how do you change timer A to reinitialize it?
+//I don't think there's a problem with this
+
+
+int main(void)
+{
+    //Taken from template:
+
+    // Halt watchdog timer
+    MAP_WDT_A_holdTimer();
+
+    MAP_CS_setDCOFrequency(3E+6); // Set DCO clock source frequency
+    MAP_CS_initClockSignal(CS_SMCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1); // Tie SMCLK to DCO
+
+    // Configure Red LED
+    MAP_GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
+    MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+
+    //Configure the 3 color LED
+    MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN0);
+    MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+
+    MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN1);
+    MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+
+    MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN2);
+    MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+
+    // Configure Switches
+    MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN1);
+    MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN4);
+
+
+#define period 256   //this is to have 1-1 correspondance with the 8 bit ADC input
+
+    // Set Timer A period (PWM signal period)
+    TA0CCR0 = period ;
+
+    // Set Duty cycle
+    TA0CCR1 = 0 ;
+
+    // Set output mode to Reset/Set
+    TA0CCTL1 = OUTMOD_7 ;    // Macro which is equal to 0x00e0, defined in msp432p401r.h
+
+    // Initialize Timer A
+    TA0CTL = TASSEL__SMCLK | MC__UP | TACLR ;   // Tie Timer A to SMCLK, use Up mode, and clear TA0R
+
+    // PWM signal will now be available on P2.4
+
+
+    //now the pwm for the revese direction
+    //using Timer A1.  See page 788 in technical manual
+       TA1CCR0 = period ;
+       TA1CCR1 = 0 ;
+       TA1CCTL1 = OUTMOD_7 ;
+       TA1CTL = TASSEL__SMCLK | MC__UP | TACLR ;
+
+
+//this should be correct.  According to page 785, it says that when the TAxCCR0 is nonzero, the timer will start when there is a mode set
+
+
+    Interrupt_disableMaster();
+    Timer_A_clearInterruptFlag(TIMER_A1_BASE);
+    //Enable and configure the interrupt for up mode
+    Timer_A_enableInterrupt(TIMER_A1_BASE);
+    Timer_A_configureUpMode(TIMER_A1_BASE, &upConfig_0);
+    Interrupt_enableInterrupt(INT_TA1_0);
+    Timer_A_startCounter(TIMER_A1_BASE, TIMER_A_UP_MODE);
+    Interrupt_enableMaster();
+
+
+    //Set pin to read ADC
+        GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P5, GPIO_PIN5,
+        GPIO_TERTIARY_MODULE_FUNCTION);
+
+        //enable ADC
+        ADC14_enableModule();
+
+        //set ADC Resolution to 8 bit
+        ADC14_setResolution(ADC_8BIT);
+
+        //this is using the masterclock to sample the ADC module (so it's running at 3MHz)
+        ADC14_initModule(ADC_CLOCKSOURCE_MCLK, ADC_PREDIVIDER_1, ADC_DIVIDER_1,
+        ADC_NOROUTE);
+
+        ADC14_configureSingleSampleMode(ADC_MEM0, false);
+
+        MAP_REF_A_setReferenceVoltage(REF_A_VREF2_5V);
+        MAP_REF_A_enableReferenceVoltage();
+
+        //conversion memory to intbuf
+        ADC14_configureConversionMemory(ADC_MEM0, ADC_VREFPOS_INTBUF_VREFNEG_VSS,
+        ADC_INPUT_A0,
+                                        ADC_NONDIFFERENTIAL_INPUTS);
+
+        ADC14_enableSampleTimer(ADC_MANUAL_ITERATION);
+
+        //Enable the ADC
+        ADC14_enableConversion();
+
+
+    while (1)
+    {
+        //        Interrupt_disableMaster();
+        //if one switch is pressed go forward (takes priority)
+        if (GPIO_INPUT_PIN_LOW
+                == MAP_GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN1))
+        {
+            MAP_GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
+            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+            TA0CCR1 = adc ;
+            TA1CCR1 = 0 ;
+        }
+        else
+        {    //if the other switched is pressed, go backwards
+            if (GPIO_INPUT_PIN_LOW
+                    == MAP_GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN4))
+            {
+                MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+                MAP_GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN0);
+                TA0CCR1 = 0 ;
+                            TA1CCR1 = adc ;
+
+            }
+            else
+            {
+
+                MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+                MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+                TA0CCR1 = 0 ;
+                            TA1CCR1 = 0 ;
+
+            }
+
+        }
+
+        //        Interrupt_enableMaster();
+    }
+}
+
+
+//how does timer A work?  If I had done timer 0, would it not work?
+void TA1_0_IRQHandler(void)
+{
+    //clear interrupt flag
+    Timer_A_clearCaptureCompareInterrupt(TIMER_A1_BASE,
+    TIMER_A_CAPTURECOMPARE_REGISTER_1);
+
+
+        //wait for adc to be ready
+        while (ADC14_isBusy())
+        {
+        };
+        //convert values and print the converted temperature
+        ADC14_toggleConversionTrigger();
+        uint8_t adc = ADC14_getResult(ADC_MEM0);
+
+}
+

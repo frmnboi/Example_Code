@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+//import the driver library
+#include "driverlib.h"
+
+void main(void)
+
+{
+    // Halt watchdog timer
+    MAP_WDT_A_holdTimer();
+
+    //configure setup for ADC
+
+        //Enable ADC Module
+        ADC14_enableModule();
+
+        //Set the resolution to 10
+        ADC14_setResolution((uint32_t) 10);
+
+        //Initialize the ADC Module
+        ADC14_initModule ( uint32_t clockSource, uint32_t clockPredivider,
+        uint32_t clockDivider, uint32_t internalChannelMask)
+
+
+
+    //configure setup for TimerA
+
+
+}
+
+

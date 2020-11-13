@@ -1,0 +1,704 @@
+//for the mechatronics final project
+
+//import the driver library and the prototype and define statements
+#include "driverlib.h"
+#include <stdio.h>
+
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
+
+#define timer1_period 4688
+//this value equals 1 second with 64 divider
+//using a divider of 8, we cut the update time down to 1/8 of a second, which is close to the refresh rate of the sensors hopefully.
+
+const Timer_A_UpModeConfig upConfig_0 =                     // Up Mode
+		{ TIMER_A_CLOCKSOURCE_SMCLK,                // Timer A is based on SMCLK
+				TIMER_A_CLOCKSOURCE_DIVIDER_8, // Slow down the counter 64 times over
+				timer1_period,           // Period of Timer A, stored in TAxCCR0
+				TIMER_A_TAIE_INTERRUPT_DISABLE, // Disable interrupts when Timer A rolls over
+				TIMER_A_CCIE_CCR0_INTERRUPT_ENABLE, // Enable interrupt for capture-compare
+				TIMER_A_DO_CLEAR             // Clears counter when initialized
+		};
+
+//180000 translates to 60ms, the recommended minimum sensing period for the ultrasonic sensors.  can probalby go lower through in indoor environments
+#define ultrasonicpingperiod 180000 ///4
+
+//timedeltas are the length of time that the ultrasonic sensor gives back proportional to time of flight
+
+//in order: 7 is topleft, 5 is topright, 3 is bottomleft, 1 is bottomright
+//7,5,3,1 translates in order of 1,2,3,4 in timedelta[x]
+
+//if shorts do not work, change to int or long
+volatile int timedelta1 = 0;
+volatile int timedelta2 = 0;
+volatile int timedelta3 = 0;
+volatile int timedelta4 = 0;
+
+volatile uint8_t sensor = 0;
+
+volatile bool awaitingping1 = false;
+volatile bool awaitingping2 = false;
+
+volatile int leftturnerr = 0;
+volatile int rightturnerr = 0;
+volatile int widtherr = 0;
+
+volatile unsigned char printdivider = 0;
+
+//Sector size of 4096 divided by size of short (2) = 2048
+unsigned short ultrasonic1arr[2046] =
+{ };
+unsigned short ultrasonic2arr[2046] =
+{ };
+unsigned short ultrasonic3arr[2046] =
+{ };
+unsigned short ultrasonic4arr[2046] =
+{ };
+
+short ultrasonic1counter = 0;
+short ultrasonic2counter = 0;
+short ultrasonic3counter = 0;
+short ultrasonic4counter = 0;
+
+#define Ultrasonic1memory 0x0003F000   // Address of Main Memory, Bank 1, Sector 31
+#define Ultrasonic2memory 0x0003E000   // Address of Main Memory, Bank 1, Sector 30
+#define Ultrasonic3memory 0x0003D000   // Address of Main Memory, Bank 1, Sector 29
+#define Ultrasonic4memory 0x0003C000   // Address of Main Memory, Bank 1, Sector 28
+
+//there may be no point to having this as  char array as opposed to a short because there probably won't be more motor updates than sensor ones.  Actually, there probably will be
+//let's say we update all motors every time a ultrasonic sensor pings, each memory address here gets
+
+//calculating the time that we can record: 4095*15ms=61.4 seconds.  good enough to just capture norrmally.
+signed char Wheel1arr[4094] =
+{ };
+signed char Wheel2arr[4094] =
+{ };
+signed char Wheel3arr[4094] =
+{ };
+signed char Wheel4arr[4094] =
+{ };
+
+//all wheels are updated at the same time to only 1 counter is needed
+short wheelcounter = 0;
+
+//short wheel1counter=0;
+//short wheel2counter=0;
+//short wheel3counter=0;
+//short wheel4counter=0;
+
+#define Wheel1memory 0x0003B000   // Address of Main Memory, Bank 1, Sector 27
+#define Wheel2memory 0x0003A000   // Address of Main Memory, Bank 1, Sector 26
+#define Wheel3memory 0x00039000   // Address of Main Memory, Bank 1, Sector 25
+#define Wheel4memory 0x00038000   // Address of Main Memory, Bank 1, Sector 24
+
+//these declarations should really be tied to a header file for good practices if I were using more than just main
+void UltrasonicSensor(uint8_t triggerport, int triggerpin);
+static void write2Memorychar(unsigned char dataarr[], long memorylocation);
+static void write2Memoryshort(unsigned short dataarr[], long memorylocation);
+static void readMemory(long memorylocation);
+
+// int size and unsigned int size are 4 bytes
+
+int main(void)
+{
+	//Taken from template:
+
+	// Halt watchdog timer
+	MAP_WDT_A_holdTimer();
+
+	//not sure if this is setting the reference voltage for the trigger to 2.5 volts
+//	MAP_REF_A_setReferenceVoltage(REF_A_VREF2_5V);
+
+	Interrupt_disableMaster();
+
+//	FPU_enableModule();
+//	FPU_disableStacking() ;
+//	FPU_enableLazyStacking() ;
+
+	MAP_CS_setDCOFrequency(3E+6); // Set DCO clock source frequency
+	MAP_CS_initClockSignal(CS_SMCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1); // Tie SMCLK to DCO
+
+	// Configure Red LED
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
+	MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+
+	//Configure the 3 color LED
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN0);
+	MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN1);
+	MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN2);
+	MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+
+	// Configure Switches
+	MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN1);
+	MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN4);
+
+	//set pwm pins as outputs
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN4);
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN5);
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN6);
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN7);
+
+	//setting primary pwm functionality on pins
+	P2SEL0 |= 0xF0; // Set bits  4-7 of P2SEL0 to enable TA0.1-4 functionality on pins 2.4-2.7
+	P2SEL1 &= ~0xF0; // Clear bit 4-7 of P2SEL1 to enable TA0.1-4 functionality on pins 2.4-2.7
+
+	//all motors cannot go backwards, only stop or go forward.  Outputs are char and range between 0 and 254 (255 reserved for the stop signal in memory)
+#define pwmperiod	254
+	// Set Timer A0 period (PWM signal period).  Shared for all timer A0 instances
+	TA0CCR0 = pwmperiod;
+	// Set Duty cycle for all pwm items to 0
+	//*****************not sure if this is correct, since
+	TA0CCR1 = 0;
+	TA0CCR2 = 0;
+	TA0CCR3 = 0;
+	TA0CCR4 = 0;
+
+	// Set output mode to Reset/Set
+	TA0CCTL1 = OUTMOD_7;
+	TA0CCTL2 = OUTMOD_7;
+	TA0CCTL3 = OUTMOD_7;
+	TA0CCTL4 = OUTMOD_7;
+
+	// Initialize Timer A
+	TA0CTL = TASSEL__SMCLK | MC__UP | TACLR; // Tie Timer A to SMCLK, use Up mode, and clear TA0R
+
+	//*********************Not really neccisary for this project, as all I need to do is simply control the relative pwm control to each motor************
+
+	MAP_GPIO_setAsInputPin(GPIO_PORT_P3, GPIO_PIN7);
+
+	P5IN = 0x00;
+	P5IFG = 0x00;
+
+	P3IN = 0x00;
+	P3IFG = 0x00;
+
+	//note that this is required for interrupt to work.
+	NVIC_EnableIRQ(PORT5_IRQn);     // Enable PORT5 Interrupt
+	NVIC_EnableIRQ(PORT3_IRQn);
+	//doesn't seem to be neccisary
+	//it just seems to run the interrupt once but doesn't do anything
+//	   Interrupt_registerInterrupt(PORT5_IRQn,PORT5_IRQHandler());
+
+	//pins 5.7, 5.2, 5.0
+	P5IE = 0b10000101;
+	//pin 3.7
+	P3IE = 0b10000000;
+
+	//set interrupts to start when there is a low to high or high to low transition (this is for reading the pulse and starting/stoping the time of flight timer
+	GPIO_interruptEdgeSelect(
+	GPIO_PORT_P5,
+	GPIO_PIN2 | GPIO_PIN0 | GPIO_PIN7,
+	GPIO_LOW_TO_HIGH_TRANSITION | GPIO_HIGH_TO_LOW_TRANSITION);
+
+	GPIO_interruptEdgeSelect(
+	GPIO_PORT_P3,
+	GPIO_PIN7,
+	GPIO_LOW_TO_HIGH_TRANSITION | GPIO_HIGH_TO_LOW_TRANSITION);
+
+	Interrupt_setPriority(INT_PORT5, (uint8_t) 5);
+	Interrupt_setPriority(PORT5_IRQn, (uint8_t) 5);
+
+	Interrupt_setPriority(INT_PORT3, (uint8_t) 5);
+	Interrupt_setPriority(PORT3_IRQn, (uint8_t) 5);
+
+	/* Configuring SysTick to trigger at 1500000 (MCLK is 3MHz so this will make
+	 * it toggle every 0.5s) */
+//	MAP_SysTick_enableModule();
+//	MAP_SysTick_setPeriod(ultrasonicpingperiod);
+//	MAP_Interrupt_enableSleepOnIsrExit();
+//	MAP_SysTick_enableInterrupt();
+//
+//	//set the priority to lower than the ultrasonic sensor
+//	Interrupt_setPriority(SysTick_Handler, (uint8_t) 6);
+//	/* Enabling MASTER interrupts */
+	MAP_Interrupt_enableMaster();
+
+	//use 1-2 Timer32 modules to preserve the Timer A modules that can use PWM.
+	//use Timer32 to count the time deltas for the ultrasonic sensors.  No 2 ultrasonic sensors on the same side of the car should be active at the same time to prevent interference.
+
+	//start the 32 bit timers for counting the flight response, 1 for each side of the car
+	MAP_Timer32_initModule(TIMER32_0_BASE, TIMER32_PRESCALER_1, TIMER32_32BIT,
+	TIMER32_FREE_RUN_MODE);
+	MAP_Timer32_startTimer(TIMER32_0_BASE, true);
+
+	MAP_Timer32_initModule(TIMER32_1_BASE, TIMER32_PRESCALER_1, TIMER32_32BIT,
+	TIMER32_FREE_RUN_MODE);
+	MAP_Timer32_startTimer(TIMER32_1_BASE, true);
+
+	//enable the Timer A interrupt fr refreshing the device
+
+	Timer_A_clearInterruptFlag(TIMER_A2_BASE);
+	//Enable and configure the interrupt for up mode
+	Timer_A_enableInterrupt(TIMER_A2_BASE);
+	Timer_A_configureUpMode(TIMER_A2_BASE, &upConfig_0);
+	Interrupt_enableInterrupt(INT_TA2_0);
+	//this timer A interrupt is consistently changing the values even when debug is running, an
+
+	//set the priority to lower than the ultrasonic sensor
+//		Interrupt_setPriority(TA2_0_IRQHandler, (uint8_t) 6);
+
+	//if this doesn't work, the systick timer will work just fine as well.
+
+	//Counts in up mode to the equivalent time for 0.05 second
+	Timer_A_startCounter(TIMER_A2_BASE, TIMER_A_UP_MODE);
+
+	Interrupt_enableMaster();
+
+	//****************************************************************************************************************************************
+//	Wheel1arr[0]=9;
+//		Wheel1arr[1]=-39;
+//		Wheel1arr[2]=9;
+//			Wheel1arr[3]=-39;
+//
+//	ultrasonic1arr[0]=77;
+//	ultrasonic1arr[1]=5;
+//	ultrasonic1arr[2]=0;
+//
+//	//confirmed that the
+//	unsigned short shortarray[]={1,2,99};
+//
+//		Interrupt_disableMaster();
+//	write2Memorychar(Wheel1arr, Wheel1memory);
+////	write2Memorychar( shortarray, Wheel1memory);
+////	write2Memoryshort(ultrasonic1arr, Ultrasonic1memory);
+//	write2Memoryshort(shortarray, Ultrasonic1memory);
+//	printf("Memory Writes Complete\n");
+//
+//
+//	readMemory(Wheel1memory);
+//	readMemory(Ultrasonic1memory);
+//
+//	char i;
+//			for (i = 0; i < 10; i++)
+//			{
+//			}
+//		Interrupt_enableMaster(); //this freezes, but thankfully, this is teh last item on the program's list.  LOL it works if you put a slight delay.  Perhaps it is waiting on some other hardware
+
+	while (1)
+	{
+//		MAP_PCM_gotoLPM0();
+	}
+
+}
+
+//void SysTick_Handler(void)
+//{
+//	//use this to update the control to motors?
+//
+//
+//	}
+//
+//}
+
+//interrupts for the ultrasonic sensors
+void PORT5_IRQHandler()
+//void interruptfunction(void)
+{
+// Pins on port 5 that are interruptable: 2, 0, 7, 1
+//there will be 4 gpio triger interrupts that will calculate the time of flight.  I'm going to start it with sending 2 at a time, one on each side
+
+//P5IN input register to check values
+
+//some other things use port 5 items, which also trigger this interrupt it seems
+
+	if (P5IFG & 0b10000000)
+	{
+//pin 7 is activated
+//PxIV Register seems to be for interrupt priority
+//PxIFG Register is the  Port X Interrupt Flag Register
+
+		//remove interrupt flag
+		P5IFG &= ~0b10000000;
+		if (awaitingping1)
+		{
+			//if the device hasn't had a prior trigger
+			Timer32_setCount(TIMER32_0_BASE, UINT32_MAX);
+			awaitingping1 = false;
+			//check to see if this is actually the 32 bit max, because it may only be the 16 bit max
+		}
+		else
+		{ //distance is not strictly neccisary, because it will always be proportional to the speed of sound contant and 2 but all we care about is relative time of flight.
+//			timedelta1 = distanceReg(
+//					UINT32_MAX - Timer32_getValue(TIMER32_0_BASE));
+			timedelta1=UINT32_MAX - Timer32_getValue(TIMER32_0_BASE);
+			if (ultrasonic1counter < 2046)
+			{
+				ultrasonic1arr[ultrasonic1counter] = timedelta1;
+				ultrasonic1counter++;
+			}
+			awaitingping1 = true;
+
+		}
+	}
+	else if (P5IFG & 0b00000100)
+	{
+//pin 2 is activated
+		P5IFG &= ~0b00000100;
+		if (awaitingping2)
+		{
+//now start the timer
+			Timer32_setCount(TIMER32_1_BASE, UINT32_MAX);
+			awaitingping2 = false;
+		}
+		else
+		{ //distance is not strictly neccisary, because it will always be proportional to the speed of sound contant and 2 but all we care about is relative time of flight.
+//			timedelta2 = distanceReg(
+//					UINT32_MAX - Timer32_getValue(TIMER32_1_BASE));
+			timedelta2=UINT32_MAX - Timer32_getValue(TIMER32_1_BASE);
+			if (ultrasonic2counter < 2046)
+			{
+				ultrasonic2arr[ultrasonic2counter] = timedelta2;
+				ultrasonic2counter++;
+			}
+			awaitingping2 = true;
+		}
+	}
+
+	else if (P5IFG & 0b00000001)
+	{
+//pin 0 is activated
+		P5IFG &= ~0b00000001;
+		if (awaitingping1)
+		{
+			//now start the timer
+			Timer32_setCount(TIMER32_0_BASE, UINT32_MAX);
+			awaitingping1 = false;
+		}
+		else
+		{ //distance is not strictly neccisary, because it will always be proportional to the speed of sound contant and 2 but all we care about is relative time of flight.
+//			timedelta3 = distanceReg(
+//					UINT32_MAX - Timer32_getValue(TIMER32_0_BASE));
+			timedelta3=UINT32_MAX - Timer32_getValue(TIMER32_0_BASE);
+			if (ultrasonic3counter < 2046)
+			{
+				ultrasonic3arr[ultrasonic3counter] = timedelta3;
+				ultrasonic3counter++;
+			}
+			awaitingping1 = true;
+		}
+	}
+
+//	//the timer values are negative and uint32max seems to be 0
+//	printf("%d, %d, %d, %d \n", timedelta1, timedelta2, timedelta3,timedelta4);///444000
+//	printf("interrupt triggered\n");
+
+}
+
+void PORT3_IRQHandler()
+{
+
+	if (P3IFG & 0b10000000)
+	{
+//pin 7 is activated
+//PxIV Register seems to be for interrupt priority
+//PxIFG Register is the  Port X Interrupt Flag Register
+
+		//remove interrupt flag
+		P3IFG &= ~0b10000000;
+		if (awaitingping2)
+		{
+			//now start the timer
+			Timer32_setCount(TIMER32_1_BASE, UINT32_MAX);
+			awaitingping2 = false;
+		}
+		else
+		{ //distance is not strictly neccisary, because it will always be proportional to the speed of sound contant and 2 but all we care about is relative time of flight.
+			timedelta4 = distanceReg(
+					(UINT32_MAX - Timer32_getValue(TIMER32_1_BASE)));
+//			timedelta4=UINT32_MAX - Timer32_getValue(TIMER32_1_BASE);
+			if (ultrasonic2counter < 2046)
+			{
+				ultrasonic2arr[ultrasonic2counter] = timedelta2;
+				ultrasonic2counter++;
+			}
+			awaitingping2 = true;
+		}
+
+//		printf("interrupt triggered\n");
+	}
+}
+
+void TA2_0_IRQHandler()
+{
+	//clear interrupt flag
+	Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
+	TIMER_A_CAPTURECOMPARE_REGISTER_0);
+
+//you can put the update to the motors in the interrupt, but it might be better to do it here on loop
+//actually, with the constant updating, it might be better to use another TimerA instance to control how fast it updates***************
+
+//in order: 7 is topleft, 5 is topright, 3 is bottomleft, 1 is bottomright
+//7,5,3,1 translates in order of 1,2,3,4 in timedelta[x]
+
+//PD control
+//3 error values possible- left and right side differences in distance to wall and relative differences between the averages of both sides
+
+//leftturnerror being positive means that the car is aiming towards the right  relative to left side measurements
+	leftturnerr = timedelta1 - timedelta3;
+//rightturnerr being positive means the car is aimed towards the left relative to right side measurements
+	rightturnerr = timedelta2 - timedelta4;
+
+	widtherr = timedelta1 - timedelta2 + timedelta3 - timedelta4;
+
+//I can control the relative pwm strength to each of the 4 motors
+
+//use a linear scale for the initial movement of the car forward
+//y=mx+b
+#define defaultthrust (100+(timedelta1+timedelta2+timedelta3+timedelta4)/4)
+
+//using only P control
+
+//#define leftturndiscount leftturnerr*twistgain
+//#define rightturndiscount rightturnerr*twistgain
+//since they have the same characteristics, we can just combine them into a single term
+#define turndiscount (leftturnerr-rightturnerr)*twistgain
+//this being positive means that there is greater rightward tendancy relative to the surrounding walls than leftward and the car needs to turn left more
+//to turn left, the left side motors must slow/spin backwards and the right side motors must speed up
+
+#define widthdiscount widtherr*widthgain
+//this being positive means that the car is farther from the left side than the right and needs to turn right
+//to turn right, the right side motors must slow/spin backwards and the left side motors must speed up
+
+#define twistgain 5
+#define widthgain 3
+
+//int topleft=defaultthrust+turndiscount-widthdiscount;
+//int topright=defaultthrust-turndiscount+widthdiscount;
+//int botleft=defaultthrust+turndiscount-widthdiscount;
+//int botright=defaultthrust-turndiscount+widthdiscount;
+
+//these are unsigned so they will need to allow signed
+	//max min clamps the value to those that the pwm can handle.  type conversion does not properly truncate values to be within range
+	unsigned char motor1 = (unsigned char) MIN(pwmperiod,
+			MAX(0,defaultthrust+turndiscount-widthdiscount));
+	unsigned char motor2 = (unsigned char) MIN(pwmperiod,
+			MAX(0,defaultthrust-turndiscount+widthdiscount));
+	unsigned char motor3 = (unsigned char) MIN(pwmperiod,
+			MAX(0,defaultthrust+turndiscount-widthdiscount));
+	unsigned char motor4 = (unsigned char) MIN(pwmperiod,
+			MAX(0,defaultthrust-turndiscount+widthdiscount));
+
+	//I think it should still be fine to put a char into the TA0 register, which is int type.  I believe this worked before
+	//(int)
+	TA0CCR1 = motor1;
+	TA0CCR2 = motor2;
+	TA0CCR3 = motor3;
+	TA0CCR4 = motor4;
+
+	if (wheelcounter < 4094)
+	{
+		Wheel1arr[wheelcounter] = motor1;
+		Wheel2arr[wheelcounter] = motor2;
+		Wheel3arr[wheelcounter] = motor3;
+		Wheel4arr[wheelcounter] = motor4;
+		wheelcounter++;
+	}
+
+//	if (printdivider == 0)
+//	{
+//		printf("%d, %d, %d, %d \n", timedelta1, timedelta2, timedelta3,
+//				timedelta4);	///444000
+//	}
+//	printdivider++; //let it overflow
+
+}
+
+//so apprently C doesn't have templates, so I need to copy this and change the input datatype.
+//it also apparently doesn't have overloading either., even with switching with _Generic, you still need to write out all the functions
+
+static void write2Memoryshort(unsigned short dataarr[], long memorylocation)
+{
+	//note that without disabling interrupts, interrupting mid protecting or unprotecting will cause a perminent freeze
+//	Interrupt_disableMaster();
+
+	//0 is the value that should never be reached from an ultrasonic sensor from empircial testing
+	//to ensure that the last element is the terimal 0 element
+	dataarr[sizeof(dataarr) - sizeof(dataarr[0])] = 0;
+
+	// Unprotect all sectors
+	MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR31);
+	MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR30);
+	MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR29);
+	MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR28);
+
+	//Erase sector to write to it
+	if (!MAP_FlashCtl_eraseSector(memorylocation))
+	{
+		printf("Erase failed\r\n");
+	}
+
+	//write to memory
+	//the number of bytes.  shorts are 2 bytes
+	//you have to write an extra 2 bits to get the zero stop signal
+	if (!MAP_FlashCtl_programMemory(dataarr, (void*) memorylocation,
+			sizeof(dataarr) + 2))	//sizeof(dataarr)/sizeof(dataarr[0])
+	{
+		printf("Write failed\r\n");
+	}
+	else
+	{
+		printf("Write success\r\n");
+
+	}
+	/* Setting the sector back to protected  */
+	MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR31);
+	MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR30);
+	MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR29);
+	MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR28);
+}
+
+static void write2Memorychar(unsigned char dataarr[], long memorylocation)
+{
+	//force the last dataarray element to be 255, which will not be possible from the pwm outputs.  Motors can only go forwards or stop.
+	dataarr[sizeof(dataarr) - sizeof(dataarr[0])] = 255;
+
+	// Unprotect all sectors
+	MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR27);
+	MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR26);
+	MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR25);
+	MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR24);
+
+	//Erase sector to write to it
+	if (!MAP_FlashCtl_eraseSector(memorylocation))
+	{
+		printf("Erase failed\r\n");
+	}
+
+	//write to memory
+	//writes extra bits for some reason.  makes it work
+	printf("motor sensor wrote %d bytes\n", sizeof(dataarr));
+	if (!MAP_FlashCtl_programMemory(dataarr, (void*) memorylocation,
+			sizeof(dataarr) + 1))
+	{
+		printf("Write failed\r\n");
+	}
+	else
+	{
+		printf("Write success\r\n");
+
+	}
+	MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR27);
+	MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR26);
+	MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR25);
+	MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR24);
+}
+
+static void readMemory(long memorylocation)
+{
+	// Assume data is already in Main memory, from running program last time
+
+	if (memorylocation > 0x0003B000)
+	{
+		//if the read location is for an ultrasonic sensor dataset
+		unsigned short *shorts_from_flash = (unsigned short*) memorylocation;
+		printf("Starting Data Access:\n");
+		while (*shorts_from_flash)
+		{
+			//no need to send over uart, just print on screen.
+			printf("%d\n", *shorts_from_flash);
+			//move memory addresses
+			shorts_from_flash++;
+		}
+		printf("Data Access Complete\n");
+
+	}
+	else
+	{
+		//if the read location is for a motor dataset
+		unsigned char *char_from_flash = (unsigned char*) memorylocation;
+		printf("Starting Data Access:\n");
+		while (*char_from_flash != 255)
+		{
+			//no need to send over uart, just print on screen.
+			printf("%d\n", *char_from_flash);
+			//move memory addresses
+			char_from_flash++;
+		}
+		printf("Data Access Complete\n");
+	}
+
+//	float *floats_from_flash = (float*) Ultrasonic1memory;
+//
+//
+//    //while it is not a null character, pull from memory
+//    while (*floats_from_flash)
+//    {
+//        //convert float to ascii characters and send over Uart
+//        len = (uint8_t) sprintf(temparr, "%.1f\r\n", floats_from_flash[i]);
+//        for (j = 0; j < len; j++)
+//        {
+//            UART_transmitData(EUSCI_A0_BASE, temparr[j]);
+//            printf("%c", temparr[j]);
+//        }
+//        //move memory addresses
+//        *floats_from_flash++;
+//    }
+}
+
+//I trust the new distance regressions
+
+int distanceReg(int rawping)
+{
+	//note that constant running of this interferes with normal operation and gives erronious values.
+	if (printdivider == 0)
+		{
+			printf("%d \n", (double) -rawping);
+			printf("%d \n", (rawping - 47628));
+			double pingdelta= (rawping - 47628);
+			printf("%d \n", pingdelta);
+			printf("%d \n", (rawping - 47628) / (double) 516);
+			printf("%d \n\n", (int) ((double) (rawping - 47628) / 516));
+		}
+		printdivider++; //let it overflow
+//	printf("%d \n", rawping);
+//	printf("%d \n", (rawping - 47628));
+//	printf("%d \n", (float) (rawping - 47628) / (float) 516);
+//	printf("%d \n\n", (int) ((float) (rawping - 47628) / (float) 516));
+
+	//for some reason the conversion to float or double leads to an extremely large number erroniously
+	//regression is 516*x+47628
+	return (rawping - 47628); //(int) ((float) (rawping - 47628) / 516);
+
+}
+
+//int distanceReg1(int rawping)
+//{
+//	//regression is 528.92*x+47588
+//	return (rawping-47588) // /529
+//
+//}
+//
+//int distanceReg2(int rawping)
+//{
+//	//regression is 503.14*x+47496
+//	return (rawping-47496)
+//
+//}
+//
+////I notice the ones that have 3 points have a smaller slope than those of the 4 point ones
+//
+//int distanceReg3(int rawping)
+//{
+//	//regression is 458.94*x+47618
+//	return (rawping-47618)
+//
+//}
+//
+//int distanceReg4(int rawping)
+//{
+//	//regression is 453.69*x+47871
+//	return (rawping-47871)
+//
+//}
+//
+//int distanceReg5(int rawping)
+//{
+//	//regression is 471.17*x+47568
+//	return (rawping-47871)
+//
+//}
+

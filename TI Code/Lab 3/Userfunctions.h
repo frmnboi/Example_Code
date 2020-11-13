@@ -1,0 +1,33 @@
+
+#define LEDcounter Mandatorydefinestatement
+
+void toggleRGB(void);
+
+
+//unsigned short LEDcounter=0;
+
+//void toggleRGB(void)
+
+//void toggleRGB(void){
+//            LEDcounter++;
+//            LEDcounter%=3;
+//            switch (LEDcounter){
+//
+//            case 0:
+//                            MAP_GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN0);
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+//                            break;
+//            case 1:
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+//                            MAP_GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN1);
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+//                            break;
+//            case 2:
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+//                            MAP_GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN2);
+//                            break;
+//
+//            }
+//}

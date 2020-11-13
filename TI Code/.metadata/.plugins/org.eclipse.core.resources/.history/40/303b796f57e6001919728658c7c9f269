@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+//import the driver library
+#include "driverlib.h"
+
+void main(void)
+
+{
+    // Halt watchdog timer
+    MAP_WDT_A_holdTimer();
+
+    // Set timer frequency
+    MAP_CS_setDCOFrequency(3E+6);
+    MAP_CS_initClockSignal(CS_ACLK,CS_DCOCLK_SELECT,CS_CLOCK_DIVIDER_1);
+
+
+
+    //configure setup for ADC
+
+        //Configure GPIO?  Is this needed?
+        /* Configuring GPIOs (5.5 A0) */
+        MAP_GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P5, GPIO_PIN5,
+        GPIO_TERTIARY_MODULE_FUNCTION);
+
+        //Enable ADC Module
+        ADC14_enableModule();
+
+        //Set the resolution to 10
+        ADC14_setResolution((uint32_t) 10);
+
+        //Initialize the ADC Module ***still needs to be done***
+        ADC14_initModule ( uint32_t clockSource, uint32_t clockPredivider, uint32_t clockDivider, uint32_t internalChannelMask)
+
+        //Configure Single Channel Sampling Mode
+        //use ADC_MEM0 and repeatmode is false
+        ADC14_configureSingleSampleMode (ADC_MEM0, false)
+
+
+
+    //configure setup for TimerA
+
+
+}
+
+

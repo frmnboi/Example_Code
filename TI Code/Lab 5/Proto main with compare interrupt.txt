@@ -1,0 +1,81 @@
+
+#include <stdio.h>
+
+//import the driver library
+#include "driverlib.h"
+
+
+
+//create struct for Timer A to work in compare mode
+    //since there isn't a single example, if there is an issue, change this out with an up/down mode configuration change.
+
+    const int clockdivider = 375000;
+
+    const _Timer_A_CompareModeConfig
+    {
+        //of type uint_fast16_t
+        //compareRegister
+        TIMER_A_CAPTURECOMPARE_REGISTER_0,
+        //compareInterruptEnable
+        TIMER_A_CAPTURECOMPARE_INTERRUPT_ENABLE,
+        //compareOutputMode
+        //I'm guessing this simply resets the timer to 0 again?
+        TIMER_A_OUTPUTMODE_RESET,
+        //compareValue
+        //1 sec = 3000000/8/375000 ?
+        clockdivider?,
+    } TimerA_config;
+
+void main(void)
+
+{
+    // Halt watchdog timer
+    MAP_WDT_A_holdTimer();
+
+    // Set timer frequency
+    MAP_CS_setDCOFrequency(3E+6);
+    MAP_CS_initClockSignal(CS_ACLK,CS_DCOCLK_SELECT,CS_CLOCK_DIVIDER_8);
+
+
+
+        Interrupt_disableMaster();
+        Timer_A_clearInterruptFlag(TIMER_A0_BASE);
+        Timer_A_enableInterrupt(TIMER_A0_BASE);
+        //There doesn't seem to exist a compare mode, so why was this ever listed?
+        Interrupt_enableInterrupt(INT_TA0_0);                                   // Enable Timer A interrupt
+//        Timer_A_startCounter(TIMER_A0_BASE, TIMER_A_COMPARE_MODE);                   // Start Timer A
+        Interrupt_enableMaster();                                               // Enable all interrupts
+
+
+//    void Timer_A_initCompare(TIMER_A0_BASE,*TimerA_config)
+//
+//    //try this timer out before continuing
+//
+//
+//
+//    //configure setup for ADC
+//
+//        //Configure GPIO?  Is this needed?
+//        /* Configuring GPIOs (5.5 A0) */
+//        MAP_GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P5, GPIO_PIN5,
+//        GPIO_TERTIARY_MODULE_FUNCTION);
+//
+//        //Enable ADC Module
+//        ADC14_enableModule();
+//
+//        //Set the resolution to 10
+//        ADC14_setResolution((uint32_t) 10);
+//
+//        //Initialize the ADC Module ***still needs to be done***
+//        ADC14_initModule ( uint32_t clockSource, uint32_t clockPredivider, uint32_t clockDivider, uint32_t internalChannelMask)
+//
+//        //Configure Single Channel Sampling Mode
+//        //use ADC_MEM0 and repeatmode is false
+//        ADC14_configureSingleSampleMode (ADC_MEM0, false)
+
+
+
+    //configure setup for TimerA
+
+
+}

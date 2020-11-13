@@ -1,0 +1,105 @@
+#include <stdio.h>
+
+//import the driver library
+#include "driverlib.h"
+
+void UART_Send_Receive();
+
+char letter ='a';
+
+void main(void)
+{
+    // Halt watchdog timer
+    MAP_WDT_A_holdTimer();
+
+    unsigned int dcoFrequency = 3E+6;
+     MAP_CS_setDCOFrequency(dcoFrequency);
+     MAP_CS_initClockSignal(CS_SMCLK,CS_DCOCLK_SELECT,CS_CLOCK_DIVIDER_1);
+
+
+
+     const int baudrate=38400;
+     volatile char charbuffer[200]="";
+
+
+     const eUSCI_UART_Config uartConfig =
+     {
+     EUSCI_A_UART_CLOCKSOURCE_SMCLK, // SMCLK Clock Source
+     4, // Calculated using 3MHz and 38400bps
+     14,
+     0,
+     EUSCI_A_UART_NO_PARITY, // No Parity
+     EUSCI_A_UART_LSB_FIRST, // LSB First
+     EUSCI_A_UART_ONE_STOP_BIT, // One stop bit
+     EUSCI_A_UART_MODE, // UART mode
+     EUSCI_A_UART_OVERSAMPLING_BAUDRATE_GENERATION // Oversampling
+     };
+
+     MAP_GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P1,
+                        GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);
+
+     /* Configuring and enabling UART Module */
+     MAP_UART_initModule(EUSCI_A0_BASE, &uartConfig);
+
+     //enable interrupts for both receive and transmit
+     MAP_UART_enableModule(EUSCI_A0_BASE);
+
+//     Interrupt_registerInterrupt ( uint32_t interruptNumber, void()(void)
+//     intHandler )
+
+     //clear flag to stop the interrupt for starting without a call
+     UART_clearInterruptFlag ( EUSCI_A0_BASE, 0xF );
+
+     //no need to configure priority since it is the only interrupt
+     //EUSCI_A_UART_RECEIVE_INTERRUPT | EUSCI_A_UART_TRANSMIT_INTERRUPT
+     MAP_UART_enableInterrupt(EUSCI_A0_BASE, EUSCI_A_UART_RECEIVE_INTERRUPT | EUSCI_A_UART_TRANSMIT_INTERRUPT);
+
+
+     //setup interrupts on NVIC.  Without it, UART interrupt does nothing.
+     Interrupt_disableMaster();
+
+     Interrupt_enableInterrupt( INT_EUSCIA0 );
+     Interrupt_setPriority ( INT_EUSCIA0, 2 );
+
+     Interrupt_enableMaster();
+
+     //works up to here
+
+
+     //UART is now configured
+
+
+//     char sendmessage[4]={'h','e','l','p'};
+//     int i;
+//     for(i=0;i<4;i++)
+//     {   //wait until the register becomes free again to write
+//         while ((UCA0IFG & 0x0002)^0x0002){};
+//         //transmit the data over UART
+//         UART_transmitData(EUSCI_A0_BASE, sendmessage[i]);};
+//
+//     while(1){
+//         while ((UCA0IFG & 0x0002)^0x0002){};
+//                  //transmit the data over UART
+//                  UART_transmitData(EUSCI_A0_BASE, sendmessage[i]);};
+//
+//     };
+
+
+
+     printf("Start of Infinite Loop \n");
+
+     UART_transmitData(EUSCI_A0_BASE, letter);
+//     while(1){UART_transmitData(EUSCI_A0_BASE, letter);} //this triggers the interrupt every time it is called
+     while(1){}
+     //the UART interrupt will do the work
+
+}
+
+void UART_Send_Receive()
+{
+    printf("interrupt was called \n");
+
+    //clear interrupt flag
+    //0x2 clears the flag for write.  0x1 clears the flag for read.  But how could you know this was the one to clear?  I had to use 0xF at first to clear all
+    UART_clearInterruptFlag (EUSCI_A0_BASE, 0x3);
+}

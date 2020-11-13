@@ -1,0 +1,51 @@
+
+**** Build of configuration Debug for project Final Project ****
+
+"C:\\ti\\ccs910\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: ARM Compiler
+"C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ti/ccs910/ccs/ccs_base/arm/include" --include_path="C:/Users/Daniel Foreman/Desktop/Coding/TI Code/Final Project/driverlib/MSP432P4xx" --include_path="C:/ti/ccs910/ccs/ccs_base/arm/include/CMSIS" --include_path="C:/Users/Daniel Foreman/Desktop/Coding/TI Code/Final Project" --include_path="C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include" --advice:power="all" --define=__MSP432P401R__ --define=ccs -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 281: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 509: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 537: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 546: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 550: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 574: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 579: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 583: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 587: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 604: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 608: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 612: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 619: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 623: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 627: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 560: warning #179-D: function "write2Memorychar" was declared but never referenced
+"../main.c", line 519: warning #179-D: function "write2Memoryshort" was declared but never referenced
+"../main.c", line 596: warning #179-D: function "readMemory" was declared but never referenced
+"../main.c", line 430 (col. 13): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 433 (col. 12): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 434 (col. 13): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 435 (col. 13): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 436 (col. 13): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+Finished building: "../main.c"
+ 
+Building target: "Final Project.out"
+Invoking: ARM Linker
+"C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power="all" --define=__MSP432P401R__ --define=ccs -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Final Project.map" --heap_size=1024 --stack_size=512 -i"C:/ti/ccs910/ccs/ccs_base/arm/include" -i"C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/lib" -i"C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Final Project_linkInfo.xml" --rom_model -o "Final Project.out" "./main.obj" "./startup_msp432p401r_ccs.obj" "./system_msp432p401r.obj" "./driverlib/MSP432P4xx/adc14.obj" "./driverlib/MSP432P4xx/aes256.obj" "./driverlib/MSP432P4xx/comp_e.obj" "./driverlib/MSP432P4xx/cpu.obj" "./driverlib/MSP432P4xx/crc32.obj" "./driverlib/MSP432P4xx/cs.obj" "./driverlib/MSP432P4xx/dma.obj" "./driverlib/MSP432P4xx/flash.obj" "./driverlib/MSP432P4xx/fpu.obj" "./driverlib/MSP432P4xx/gpio.obj" "./driverlib/MSP432P4xx/i2c.obj" "./driverlib/MSP432P4xx/interrupt.obj" "./driverlib/MSP432P4xx/mpu.obj" "./driverlib/MSP432P4xx/pcm.obj" "./driverlib/MSP432P4xx/pmap.obj" "./driverlib/MSP432P4xx/pss.obj" "./driverlib/MSP432P4xx/ref_a.obj" "./driverlib/MSP432P4xx/reset.obj" "./driverlib/MSP432P4xx/rtc_c.obj" "./driverlib/MSP432P4xx/spi.obj" "./driverlib/MSP432P4xx/sysctl.obj" "./driverlib/MSP432P4xx/systick.obj" "./driverlib/MSP432P4xx/timer32.obj" "./driverlib/MSP432P4xx/timer_a.obj" "./driverlib/MSP432P4xx/uart.obj" "./driverlib/MSP432P4xx/wdt_a.obj" "../msp432p401r.cmd"  -llibc.a 
+<Linking>
+remark #10371-D: (ULP 1.1) Detected no uses of low power mode state changing instructions
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 1 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 4 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 5 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 6 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 7 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 8 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 9 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 10 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+Finished building target: "Final Project.out"
+ 
+
+**** Build Finished ****

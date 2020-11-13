@@ -1,0 +1,76 @@
+
+#include "driverlib.h"
+
+#include "Userfunctions.h"
+
+
+int main(void)
+{
+    //Taken from template:
+
+    // Halt watchdog timer
+    MAP_WDT_A_holdTimer();
+
+    // Set LEDs at output pins and set their initial state to off
+    MAP_GPIO_setAsOutputPin(GPIO_PORT_P1,GPIO_PIN0);
+    MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+
+    //For the 3 color LED
+    MAP_GPIO_setAsOutputPin(GPIO_PORT_P2,GPIO_PIN0);
+    MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+
+    MAP_GPIO_setAsOutputPin(GPIO_PORT_P2,GPIO_PIN1);
+    MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+
+    MAP_GPIO_setAsOutputPin(GPIO_PORT_P2,GPIO_PIN2);
+    MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+
+    // Switches
+    MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN1);
+    MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN4);
+
+    // Infinite loop
+    while(1){
+
+        if(GPIO_INPUT_PIN_LOW == MAP_GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN1)){
+            MAP_GPIO_toggleOutputOnPin(GPIO_PORT_P1, GPIO_PIN0);
+            while (GPIO_INPUT_PIN_LOW ==MAP_GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN1))
+            {}
+
+        }
+
+
+        if (GPIO_INPUT_PIN_LOW == MAP_GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN4)){
+            toggleRGB();
+
+            while (GPIO_INPUT_PIN_LOW ==MAP_GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN4))
+            {}
+        }
+    }
+
+}
+
+
+//void toggleRGB(void){
+//            LEDcounter++;
+//            LEDcounter%=3;
+//            switch (LEDcounter){
+//
+//            case 0:
+//                            MAP_GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN0);
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+//                            break;
+//            case 1:
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+//                            MAP_GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN1);
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+//                            break;
+//            case 2:
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+//                            MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+//                            MAP_GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN2);
+//                            break;
+//
+//            }
+//}

@@ -1,0 +1,11 @@
+#include <stdio.h>
+
+//import the driver library
+#include "driverlib.h"
+
+void main(void)
+
+{
+    // Halt watchdog timer
+        MAP_WDT_A_holdTimer();
+}

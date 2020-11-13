@@ -1,0 +1,119 @@
+//for the mechatronics final project
+
+//import the driver library and the prototype and define statements
+#include "driverlib.h"
+#include <stdio.h>
+
+
+#define timer1_period 4688
+//this value equals 1 second with 64 divider
+//using a divider of 8, we cut the update time down to 1/8 of a second, which is close to the refresh rate of the sensors hopefully.
+
+
+//180000 translates to 60ms, the recommended minimum sensing period for the ultrasonic sensors.  can probalby go lower through in indoor environments
+#define ultrasonicpingperiod 180000 ///4
+
+//timedeltas are the length of time that the ultrasonic sensor gives back proportional to time of flight
+
+//in order: 7 is topleft, 5 is topright, 3 is bottomleft, 1 is bottomright
+//7,5,3,1 translates in order of 1,2,3,4 in timedelta[x]
+
+//if shorts do not work, change to int or long
+volatile int timedelta1 = 0;
+volatile int timedelta2 = 0;
+volatile int timedelta3 = 0;
+volatile int timedelta4 = 0;
+
+volatile uint8_t sensor = 0;
+
+volatile bool awaitingping1 = false;
+volatile bool awaitingping2 = false;
+
+volatile int leftturnerr = 0;
+volatile int rightturnerr = 0;
+volatile int widtherr = 0;
+
+volatile unsigned char printdivider = 0;
+// int size and unsigned int size are 4 bytes
+
+int main(void)
+{
+	//Taken from template:
+
+	// Halt watchdog timer
+	MAP_WDT_A_holdTimer();
+
+	//not sure if this is setting the reference voltage for the trigger to 2.5 volts
+//	MAP_REF_A_setReferenceVoltage(REF_A_VREF2_5V);
+
+	Interrupt_disableMaster();
+
+//	FPU_enableModule();
+//	FPU_disableStacking() ;
+//	FPU_enableLazyStacking() ;
+
+	MAP_CS_setDCOFrequency(3E+6); // Set DCO clock source frequency
+	MAP_CS_initClockSignal(CS_SMCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1); // Tie SMCLK to DCO
+
+	// Configure Red LED
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
+	MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+
+	//Configure the 3 color LED
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN0);
+	MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN1);
+	MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN2);
+	MAP_GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+
+	// Configure Switches
+	MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN1);
+	MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN4);
+
+	//set pwm pins as outputs
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN4);
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN5);
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN6);
+	MAP_GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN7);
+
+	//setting primary pwm functionality on pins
+	P2SEL0 |= 0xF0; // Set bits  4-7 of P2SEL0 to enable TA0.1-4 functionality on pins 2.4-2.7
+	P2SEL1 &= ~0xF0; // Clear bit 4-7 of P2SEL1 to enable TA0.1-4 functionality on pins 2.4-2.7
+
+	//all motors cannot go backwards, only stop or go forward.  Outputs are char and range between 0 and 254 (255 reserved for the stop signal in memory)
+#define pwmperiod	254
+	// Set Timer A0 period (PWM signal period).  Shared for all timer A0 instances
+	TA0CCR0 = pwmperiod;
+	// Set Duty cycle for all pwm items to 0
+	//*****************not sure if this is correct, since
+	TA0CCR1 = pwmperiod/2;
+	TA0CCR2 = pwmperiod/2;
+	TA0CCR3 = pwmperiod/2;
+	TA0CCR4 = pwmperiod/2;
+
+	// Set output mode to Reset/Set
+	TA0CCTL1 = OUTMOD_7;
+	TA0CCTL2 = OUTMOD_7;
+	TA0CCTL3 = OUTMOD_7;
+	TA0CCTL4 = OUTMOD_7;
+
+	// Initialize Timer A
+	TA0CTL = TASSEL__SMCLK | MC__UP | TACLR; // Tie Timer A to SMCLK, use Up mode, and clear TA0R
+
+
+	Interrupt_enableMaster();
+
+	while (1)
+	{
+////		MAP_PCM_gotoLPM0();
+//#define pwmval 50
+//		TA0CCR4 = pwmval;
+//		TA0CCR3 = pwmval;
+//		TA0CCR2 = pwmval;
+//		TA0CCR1 = pwmval;
+	}
+
+}
